@@ -10,13 +10,6 @@ interface alu_if(input bit CLK);
   logic [2*`WIDTH-1:0] RES;
   logic COUT, OFLOW, G, L, E, ERR;
 
-  //Clocking block for generator
-/*
-  clocking gen_cb@(posedge clk);
-    default input #0 output #0;
-  endclocking
-*/
-
   //Clocking block for driver
   clocking drv_cb@(posedge CLK);
 
