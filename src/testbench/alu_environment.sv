@@ -15,6 +15,8 @@ class alu_environment;
   //Mailbox for monitor to scoreboard connection
   mailbox #(alu_transaction) mbx_mon2scb;
 
+  event e;
+
   alu_generator           gen;
   alu_driver              drv;
   alu_monitor             mon;
@@ -38,8 +40,8 @@ class alu_environment;
 
     gen = new(mbx_gen2drv);
     drv = new(mbx_gen2drv, mbx_drv2ref, drv_vif);
-    mon = new(mon_vif, mbx_mon2scb);
-    ref_sb = new(mbx_drv2ref, mbx_ref2scb, ref_vif);
+    mon = new(mon_vif, mbx_mon2scb, e);
+    ref_sb = new(mbx_drv2ref, mbx_ref2scb, ref_vif, e);
     scb = new(mbx_ref2scb, mbx_mon2scb);
    end
   endtask
