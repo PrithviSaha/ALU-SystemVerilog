@@ -34,6 +34,9 @@ class alu_scoreboard;
       compare_report();
       $display("");
     end
+
+    $display("TOTAL PASS = %0d", MATCH);
+    $display("TOTAL FAILS = %0d", MISMATCH);
   endtask
 
   function int pass();
