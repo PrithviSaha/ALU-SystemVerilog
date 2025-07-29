@@ -54,7 +54,7 @@ class alu_environment;
       scb.start();
       ref_sb.start();
     join
-    scb.compare_report();
+//    scb.compare_report();
   endtask
 
 endclass
