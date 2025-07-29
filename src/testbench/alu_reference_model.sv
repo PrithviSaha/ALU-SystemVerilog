@@ -94,14 +94,14 @@ class alu_reference_model;
       rot_amt = ref_trans.OPB[$clog2(`WIDTH)-1:0];
 
     case(ref_trans.CMD)
-      `AND : ref_trans.RES = ref_trans.OPA && ref_trans.OPB;
-      `NAND : ref_trans.RES = {{(2*`WIDTH){1'b0}}, ~((|ref_trans.OPA) && (|ref_trans.OPB))};
-      `OR : ref_trans.RES = ref_trans.OPA || ref_trans.OPB;
-      `NOR : ref_trans.RES = {{(2*`WIDTH){1'b0}}, ~((|ref_trans.OPA) || (|ref_trans.OPB))};
+      `AND : ref_trans.RES = ref_trans.OPA & ref_trans.OPB;
+      `NAND : ref_trans.RES = {(`WIDTH){1'b1}} & ~(ref_trans.OPA & ref_trans.OPB);
+      `OR : ref_trans.RES = ref_trans.OPA | ref_trans.OPB;
+      `NOR : ref_trans.RES = {(`WIDTH){1'b1}} & ~(ref_trans.OPA | ref_trans.OPB);
       `XOR : ref_trans.RES = ref_trans.OPA ^ ref_trans.OPB;
-      `XNOR : ref_trans.RES = {{(2*`WIDTH){1'b0}}, ~(ref_trans.OPA ^ ref_trans.OPB)};
-      `NOT_A : ref_trans.RES = !ref_trans.OPA;
-      `NOT_B : ref_trans.RES = !ref_trans.OPB;
+      `XNOR : ref_trans.RES = {(`WIDTH){1'b1}} & ~(ref_trans.OPA ^ ref_trans.OPB);
+      `NOT_A : ref_trans.RES = {(`WIDTH){1'b1}} & ~ref_trans.OPA;
+      `NOT_B : ref_trans.RES = {(`WIDTH){1'b1}} & ~ref_trans.OPB;
       `SHR1_A : ref_trans.RES = ref_trans.OPA >> 1;
       `SHL1_A : ref_trans.RES = ((ref_trans.OPA << 1) & ((1 << `WIDTH) - 1));
       `SHR1_B : ref_trans.RES = ref_trans.OPB >> 1;
