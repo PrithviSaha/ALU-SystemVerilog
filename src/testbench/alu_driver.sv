@@ -11,10 +11,15 @@ class alu_driver;
   virtual alu_if.DRV vif;
   //Covergroups
   covergroup drv_cg;
-    mode     : coverpoint drv_trans.MODE { bins mode_bins[] = {0,1}; }
-    cmd      : coverpoint drv_trans.CMD { bins cmd_bins[] = {[0:13]}; }
-    ip_valid : coverpoint drv_trans.INP_VALID { bins ip_valid_bins[] = {[0:3]}; }
-    cin      : coverpoint drv_trans.CIN { bins cin[] = {0,1}; }
+    MODE_CP      : coverpoint drv_trans.MODE { bins mode_bins[] = {0,1}; }
+    CMD_CP       : coverpoint drv_trans.CMD { bins cmd_bins[] = {[0:13]}; }
+    INP_VALID_CP : coverpoint drv_trans.INP_VALID { bins ip_valid_bins[] = {[0:3]}; }
+    CIN_CP       : coverpoint drv_trans.CIN { bins cin[] = {0,1}; }
+    CE_CP        : coverpoint drv_trans.CE { bins ce_bins[] = {0,1}; }
+    RST_CP       : coverpoint drv_trans.RST { bins rst_cp[] = {0,1}; }
+
+    MODE_CP_X_CMD_CP_X_INP_VALID_CP : cross MODE_CP, CMD_CP, INP_VALID_CP;
+    RST_CP_X_CE_CP : cross RST_CP, CE_CP;
   endgroup
 
 //METHODS
@@ -142,6 +147,8 @@ class alu_driver;
       $display("\tCMD = %0d | INP_VALID = %0d | OPA = %0d | OPB = %0d | CIN = %0d", drv_trans.CMD, drv_trans.INP_VALID, drv_trans.OPA, drv_trans.OPB, drv_trans.CIN);
       $display("\tRES = %0d | COUT = %0d | OFLOW = %0d | G = %0d | L = %0d | E = %0d | ERR = %0d", drv_trans.RES, drv_trans.COUT, drv_trans.OFLOW, drv_trans.G, drv_trans.L, drv_trans.E, drv_trans.ERR);
       $display("");*/
+      drv_cg.sample();
+      $display("INPUT COVERAGE%% : %.2f%%\n", drv_cg.get_coverage());
       if((drv_trans.CMD == `INC_MUL || drv_trans.CMD == `SHL1_MUL) && (drv_trans.MODE))
         repeat(1) @(vif.drv_cb);
       repeat(1) @(vif.drv_cb);
