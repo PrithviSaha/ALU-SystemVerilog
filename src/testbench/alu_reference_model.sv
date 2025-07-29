@@ -1,6 +1,7 @@
 `include "defines.sv"
 
 class alu_reference_model;
+
   alu_transaction ref_trans;
   //reference model to scoreboard connection
   mailbox #(alu_transaction) mbx_ref2scb;
@@ -9,13 +10,21 @@ class alu_reference_model;
 
   virtual alu_if.REF_SB vif;
 
+  event e;
+
   function new(mailbox #(alu_transaction) mbx_drv2ref,
                 mailbox #(alu_transaction) mbx_ref2scb,
-                virtual alu_if.REF_SB vif);
+                virtual alu_if.REF_SB vif,
+                event e);
     this.mbx_drv2ref = mbx_drv2ref;
     this.mbx_ref2scb = mbx_ref2scb;
     this.vif = vif;
+    this.e = e;
   endfunction
+
+//  function automatic bit[2*`WIDTH-1:0] add();
+//    return (ref_trans.OPA + ref_trans.OPB);
+//  endfunction
 
   // Task for arithmetic operations
   task arithmetic_ops();
@@ -119,11 +128,13 @@ class alu_reference_model;
       if(ref_trans.RST) begin
         //repeat(1) @(vif.ref_cb);      //
         mbx_ref2scb.put(ref_trans);
+        ->e;
       end
       else begin
         if(ref_trans.CE == 0) begin
           //repeat(1) @(vif.ref_cb);    //
           mbx_ref2scb.put(ref_trans);
+          ->e;
         end
         else begin
           if(ref_trans.MODE) begin          //Arithmetic
@@ -220,7 +231,9 @@ class alu_reference_model;
           end
           //$display("[%0t] REFERENCE MODEL:", $time);
           //$display("MODE = %0d | RST = %0d | CE ");
+
           mbx_ref2scb.put(ref_trans);
+          ->e;
         end
 
       end
