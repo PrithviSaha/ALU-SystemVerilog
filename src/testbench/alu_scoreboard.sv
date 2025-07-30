@@ -17,6 +17,7 @@ class alu_scoreboard;
 
   task start();
     for(int i = 0; i < `no_of_trans; i++) begin
+      //$display("I AM HERE i =%0d",i);
       ref2scb_trans = new();
       mon2scb_trans = new();
       begin
