@@ -18,7 +18,9 @@ class alu_driver;
     CE_CP        : coverpoint drv_trans.CE { bins ce_bins[] = {0,1}; }
     RST_CP       : coverpoint drv_trans.RST { bins rst_cp[] = {0,1}; }
 
-    MODE_CP_X_CMD_CP_X_INP_VALID_CP : cross MODE_CP, CMD_CP, INP_VALID_CP;
+    MODE_CP_X_CMD_CP : cross MODE_CP, CMD_CP;
+    CMD_CP_X_INP_VALID_CP : cross CMD_CP, INP_VALID_CP;
+    MODE_CP_X_INP_VALID_CP : cross MODE_CP, INP_VALID_CP;
     RST_CP_X_CE_CP : cross RST_CP, CE_CP;
   endgroup
 
