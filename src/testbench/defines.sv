@@ -1,5 +1,5 @@
 
-`define no_of_trans 20
+`define no_of_trans 221
 
 //WIDTHS
 `define CMD_WIDTH    4
