@@ -200,15 +200,16 @@ class test_regression extends alu_test;
     env.start;
 
     begin
-      trans4 = new();                   //Logical Both Operand Tests
-      env.gen.blueprint = trans4;
+      trans = new();
+      env.gen.blueprint = trans;
     end
     env.start;
 
     begin
-      trans = new();
-      env.gen.blueprint = trans;
+      trans4 = new();                   //Logical Both Operands Tests
+      env.gen.blueprint = trans4;
     end
+     //$display("LAST PACKET HAS STARTED");
     env.start;
 
   endtask
